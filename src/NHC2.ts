@@ -8,11 +8,13 @@ import { FanSpeedChangeCommand } from './command/fan-speed-change-command';
 import { isListDevicesEvent, ListDevicesCommand } from './command/list-devices-command';
 import { OverruleTemperatureCommand } from './command/overrule-temperature-command';
 import { PositionChangeCommand } from './command/position-change-command';
+import { ProgramChangeCommand } from './command/program-command';
 import { StatusChangeCommand } from './command/status-change-command';
 import { TriggerBasicStateCommand } from './command/trigger-basic-state-command';
 import { Device } from './event/device';
 import { Event } from './event/event';
 import { FanSpeed } from './event/FanSpeed';
+import { Program } from './event/Program';
 
 export class NHC2 {
   public readonly client: mqtt.MqttClient;
@@ -70,6 +72,10 @@ export class NHC2 {
 
   public sendFanSpeedCommand(deviceUuid: string, fanSpeed: FanSpeed) {
     this.sendCommand(FanSpeedChangeCommand(deviceUuid, fanSpeed));
+  }
+
+  public sendProgramCommand(deviceUuid: string, program: Program) {
+    this.sendCommand(ProgramChangeCommand(deviceUuid, program));
   }
 
   public sendTempOverruleCommand(deviceUuid: string, active: boolean, setpoint: number, minutes?: number) {
